@@ -16,7 +16,10 @@ public static class ApplicationServiceExtensions
     });
 
     services.AddCors();
+    // Scoped means it is scoped to the lifetime of the HTTP-Request
     services.AddScoped<ITokenService, TokenService>();
+    services.AddScoped<IUserRepository, UserRepository>();
+    services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
     return services;
   }
