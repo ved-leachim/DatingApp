@@ -22,7 +22,8 @@ public class AccountController : BaseApiController
     _mapper = mapper;
   }
 
-  [HttpPost("register")] // api/account/register
+  [HttpPost("register")]
+  // api/account/register
   public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
   {
     if (await UserExists(registerDto.Username)) return BadRequest("Username is taken");
@@ -50,7 +51,8 @@ public class AccountController : BaseApiController
       {
         Username = user.UserName,
         KnownAs = user.KnownAs,
-        Token = _tokenService.CreateToken(user)
+        Token = _tokenService.CreateToken(user),
+        Gender = user.Gender
       };
     }
   }
@@ -78,7 +80,8 @@ public class AccountController : BaseApiController
       Username = user.UserName,
       Token = _tokenService.CreateToken(user),
       PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url,
-      KnownAs = user.KnownAs
+      KnownAs = user.KnownAs,
+      Gender = user.Gender
     };
   }
 
