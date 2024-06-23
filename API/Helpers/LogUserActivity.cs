@@ -13,9 +13,9 @@ public class LogUserActivity : IAsyncActionFilter
     // Probably unnecessary because the filter will be used on Controllers where authentication is needed
     if (!resultContext.HttpContext.User.Identity.IsAuthenticated) return;
 
-    var username = resultContext.HttpContext.User.GetUsername();
+    var userId = resultContext.HttpContext.User.GetUserId();
     var repo = resultContext.HttpContext.RequestServices.GetRequiredService<IUserRepository>();
-    var user = await repo.GetUserByUsernameAsync(username);
+    var user = await repo.GetUserByIdAsync(userId);
     user.LastActive = DateTime.UtcNow;
     await repo.SaveAllAsync();
   }
